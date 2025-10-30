@@ -9,25 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link rel="icon" href="parabola.png" class ="icon">
   <style>
-     aside {
-      position: fixed;
-      left: -250px; /* fuera de la pantalla */
-      top: 0;
-      width: 250px;
-      height: 100%;
-      background: #cc9898;
-      color: white;
-      transition: left 0.3s ease; /* animación */
-      padding: 20px;
-    }
-    aside ul {
-      margin-top: 70px;
-      margin-left: -20px;
-      font-weight: 160;
-      font-style: italic;
-      font-size: 15px;
-      line-height: 50px;
-    }
         #overlay {
       position: fixed;
       top: 0;
@@ -152,35 +133,7 @@
 </head>
 <body>
   <header>
-     <button id="toggleBtn">☰ Menú</button>
-
-  <aside id="menuAside">
-    <ul>
-      <li><a href="datos_interesantes.html"> DATOS INTERESANTES</a></li>
-      <li><a href="contacto.html"> CONTACTOS</a></li>
-    </ul>
-  </aside>
-
   <div id="overlay"></div>
-
-  <script>
-    const btn = document.getElementById("toggleBtn");
-    const aside = document.getElementById("menuAside");
-    const overlay = document.getElementById("overlay");
-
-    // Abre/cierra con el botón
-    btn.addEventListener("click", () => {
-      aside.classList.toggle("active");
-      overlay.classList.toggle("active");
-    });
-
-    // Cierra al hacer click en el overlay
-    overlay.addEventListener("click", () => {
-      aside.classList.remove("active");
-      overlay.classList.remove("active");
-    });
-  </script> 
-
     <div class="wrap">
       <nav>
         <div style="display:flex;align-items:center;gap:10px">
