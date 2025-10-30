@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Física Interactiva – Movimiento Parabólico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="parabola.png" class ="icon">
+  <style>
+     aside {
+      position: fixed;
+      left: -250px; /* fuera de la pantalla */
+      top: 0;
+      width: 250px;
+      height: 100%;
+      background: #cc9898;
+      color: white;
+      transition: left 0.3s ease; /* animación */
+      padding: 20px;
+    }
+    aside ul {
+      margin-top: 70px;
+      margin-left: -20px;
+      font-weight: 160;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 50px;
+    }
+        #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display:none;
+      z-index: 900;
+    }
+
+    #overlay.active {
+      display: block;
+    }
+
+    .container img:hover{
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.35s ease;
+    }
+    .theory ul{
+      font-size: 18px;
+      line-height: 1.6;
+      margin-left: 20px;
+    }
+    .theory h2{
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 32px; 
+      margin-bottom: 25px; 
+    }
+    .container img{
+      margin-left: 190px;
+      margin-top: 20px;
+      display: inline-block;
+      border-radius: 70px;
+      width: 600px;
+      height: auto;
+      display: flex;
+    }
+
+    .container p{
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      font-family: 'Times New Roman', Times, serif;
+      margin-bottom: 20px;
+    }
+    aside.active {
+      left: 0;
+    }
+       /* Botón */
+    #toggleBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #021a836c;
+      color: rgb(17, 144, 218);
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      z-index: 1100;
+    }
+    .quiz h2{
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 32px; 
+      margin-bottom: 25px; 
+    }
+    :root{
+      --bg:#0b1020; --card:#121733; --ink:#e7eaf6; --muted:#a9b0d6; --brand:#7c9cff; --accent:#5fe1a5;
+      --danger:#ff6b6b; --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto; color:var(--ink); background:radial-gradient(60% 100% at 70% 10%, #1a2148 0%, #0b1020 60%);
+      background-attachment: fixed;}
+    a{color:var(--brand);text-decoration:none}
+    header{position:sticky;top:0;backdrop-filter: blur(8px); background-color:rgba(11,16,32,.6); border-bottom:1px solid rgba(255,255,255,.06); z-index:10}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px 20px}
+    nav{display:flex;gap:14px;align-items:center;justify-content:space-between}
+    nav .links a{padding:8px 12px;border-radius:12px}
+    nav .links a:hover{background:rgba(18, 38, 95, 0.863)}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:40px 20px}
+    .title{font-size: clamp(28px, 4vw, 48px); font-weight:800; letter-spacing:-.02em}
+    .subtitle{color:var(--muted);font-size:clamp(14px,1.6vw,18px);line-height:1.5}
+    .cta{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn{background:linear-gradient(135deg, var(--brand), #6fd1ff); border:none;color:#0b1020;padding:12px 16px;border-radius:16px;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
+    .btn.secondary{background:transparent;color:var(--ink);border:1px solid rgba(255,255,255,.18)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.10); border-radius:22px; box-shadow:var(--shadow)}
+    .grid{display:grid;gap:20px}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.hide-sm{display:none}}
+
+    /* Simulador */
+    .sim{padding:22px}
+    .sim h2{margin:0 0 6px}
+    .controls{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media (max-width:800px){.controls{grid-template-columns:1fr}}
+    .control{padding:14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+    .control label{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+    input[type=range]{width:100%}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .metric{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 12px;font-size:14px}
+    .metric b{display:block;font-size:20px;color:var(--accent)}
+    .canvas-wrap{margin-top:16px;background:#0a0f22;border:1px solid rgba(255,255,255,.08);border-radius:18px;position:relative}
+    .toolbar{display:flex;gap:10px;margin-top:14px}
+
+    /* Secciones */
+    section{margin:26px 0}
+    h2{font-size:24px}
+    .theory{padding:22px}
+    .theory ul{margin:8px 0 0 18px;color:var(--muted)}
+
+    /* Quiz */
+    .quiz{padding:2px}
+    .q{padding:12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);margin:12px 0 margin-bottom:20px border-radius:8px;} 
+    .q legend{font-weight:600}
+    .badge{display:inline-block;background:rgba(95,225,165,.15);color:var(--accent);border:1px solid rgba(95,225,165,.3);padding:2px 8px;border-radius:999px;font-size:12px}
+    .footer{color:var(--muted);text-align:center;padding:30px 0;font-size:13px}
+  </style>
+</head>
+<body>
+  <header>
+     <button id="toggleBtn">☰ Menú</button>
+
+  <aside id="menuAside">
+    <ul>
+      <li><a href="datos_interesantes.html"> DATOS INTERESANTES</a></li>
+      <li><a href="contacto.html"> CONTACTOS</a></li>
+    </ul>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <script>
+    const btn = document.getElementById("toggleBtn");
+    const aside = document.getElementById("menuAside");
+    const overlay = document.getElementById("overlay");
+
+    // Abre/cierra con el botón
+    btn.addEventListener("click", () => {
+      aside.classList.toggle("active");
+      overlay.classList.toggle("active");
+    });
+
+    // Cierra al hacer click en el overlay
+    overlay.addEventListener("click", () => {
+      aside.classList.remove("active");
+      overlay.classList.remove("active");
+    });
+  </script> 
+
+    <div class="wrap">
+      <nav>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:24px;height:24px;border-radius:8px(135deg,var(--brand),var(--accent));"></div>
+          <div class="titulo">
+            <img src="parabola.png" alt="icono" style="width:32px;height:32px;vertical-align:middle">
+            <span style="font-weight:800;font-size:18px;vertical-align:middle;margin-left:8px">Física Interactiva</span>
+          </div>
+        </div>
+        <div class="links">
+          <a href="#simulador">Simulador</a>
+          <a href="#teoria">Teoría</a>
+          <a href="#quiz">Evaluación</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <script>
+    const overlay = document.getElementById("overlay");
+    const btn = document.getElementById('toggleBtn');
+    const aside = document.getElementById('menuAside');
+    toggleBtn.addEventListener('click', () => {
+      menuAside.classList.toggle('active');
+    });
+        overlay.addEventListener("click", () => {
+      aside.classList.remove("active");
+      overlay.classList.remove("active");
+        });
+    </script>
+
+  <main class="wrap">
+    <div class="hero card">
+      <div>
+        <div class="title">Movimiento Parabólico  – Aprende jugando</div>
+        <p class="subtitle">Ajusta <b>velocidad</b>, <b>ángulo</b> y <b>gravedad</b>, observa la trayectoria y entiende los conceptos clave (alcance, altura máxima y tiempo de vuelo). Ideal para exposiciones y prácticas de laboratorio virtual.</p>
+        <div class="cta">
+          <a class="btn" href="#simulador">Probar simulador</a>
+          <a class="btn secondary" href="#teoria">Repasar teoría</a>
+        </div>
+      </div>
+      <div class="hide-sm">
+        <div class="card" style="padding:16px">
+          <canvas id="preview" width="520" height="280" style="width:100%;display:block;background:#0b1020;border-radius:16px"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <section id="simulador" class="sim card">
+      <h2>Simulador interactivo</h2>
+      <p class="subtitle">Tip: en el ecuador la gravedad efectiva es ~<b>9.78 m/s²</b>; en Quito (~2850 m) disminuye un poquito. Puedes probar ambos valores.</p>
+
+      <div class="controls">
+        <div class="control">
+          <label>Velocidad inicial (m/s) <span id="v0Out">20</span></label>
+          <input type="range" id="v0" min="5" max="60" step="1" value="20">
+        </div>
+        <div class="control">
+          <label>Ángulo (°) <span id="angOut">45</span></label>
+          <input type="range" id="ang" min="5" max="85" step="1" value="45">
+        </div>
+        <div class="control">
+          <label>Gravedad (m/s²) <span id="gOut">9.80</span></label>
+          <input type="range" id="grav" min="8.5" max="10.5" step="0.01" value="9.80">
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">Tiempo de vuelo<b id="tVuelo">—</b> s</div>
+        <div class="metric">Altura máxima<b id="hMax">—</b> m</div>
+        <div class="metric">Alcance<b id="alcance">—</b> m</div>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="scene" width="960" height="420" style="width:100%;display:block;border-radius:18px"></canvas>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn" id="btnPlay">▶ Iniciar</button>
+        <button class="btn secondary" id="btnPause">⏸ Pausar</button>
+        <button class="btn secondary" id="btnReset">↺ Reiniciar</button>
+      </div>
+    </section>
+
+    <section id="teoria" class="theory card">
+      <h2>Teoría express</h2>
+      <ul>
+        <li>Componentes iniciales: <code>v<sub>0x</sub>=v<sub>0</sub>·cos(θ)</code>, <code>v<sub>0y</sub>=v<sub>0</sub>·sin(θ)</code></li>
+        <li>Posición: <code>x(t)=v<sub>0x</sub>·t</code>, <code>y(t)=v<sub>0y</sub>·t - (1/2) g t²</code></li>
+        <li>Tiempo de vuelo (y=0): <code>T = 2 v<sub>0y</sub> / g</code></li>
+        <li>Altura máxima: <code>H = (v<sub>0y</sub>)² / (2g)</code></li>
+        <li>Alcance: <code>R = (v<sub>0</sub>)²·sin(2θ)/g</code></li>
+      </ul>
+      <p class="subtitle">Optimiza el alcance con <b>θ≈45°</b> cuando el punto de caída está a la misma altura del lanzamiento y no hay resistencia del aire.</p>
+    </section>
+
+    <div class="container"> 
+      <img src="movimiento.parabolico.webp" alt="Imagen de movimiento parabólico" ><p>
+        El movimiento parabólico es un tipo de movimiento bidimensional donde actúan dos 
+        componentes: una horizontal, con velocidad constante, y otra vertical, afectada por la gravedad. 
+        Si se duplica la velocidad inicial (𝑣0​) manteniendo el mismo ángulo de lanzamiento (𝜃) y 
+        la gravedad (𝑔), el alcance (𝑅) se cuadruplica, ya que este depende del cuadrado de la velocidad inicial. 
+        En condiciones ideales, sin la influencia del aire, el alcance máximo se logra con un ángulo de 45°, 
+        pues allí se equilibran las componentes vertical y horizontal del movimiento, logrando la mayor distancia 
+        posible.
+        </p> 
+      <img src="cohete.jpg" alt="Imagen de cohete"><p>
+        En el caso de los cohetes, el lanzamiento comienza de forma vertical no para seguir 
+        una parábola perfecta, sino para atravesar la parte más densa de la atmósfera de manera eficiente.
+         Esto reduce la resistencia del aire y el consumo de combustible durante los primeros instantes del vuelo.
+          Una vez alcanzada cierta altura, el cohete se inclina
+         gradualmente para ganar velocidad horizontal, necesaria para entrar en órbita.
+      </p>
+      <img src="cohete2.webp" alt="Imagen de cohete2"><p>
+        Durante el movimiento parabólico, la única fuerza que actúa verticalmente es la gravedad, 
+        la cual dirige el objeto hacia la Tierra y modifica su trayectoria. Sin embargo, cuando un cohete 
+        alcanza el espacio, su movimiento deja de ser una parábola perfecta porque entran en juego fuerzas 
+        adicionales y se aplican maniobras de control que permiten ajustar 
+        su dirección y mantener una trayectoria estable alrededor del planeta.
+      </p>
+    </div>
+    <section id="quiz" class="quiz card">
+      <h2>Evaluación rápida <span class="badge">Auto-corrige</span></h2>
+      <form id="quizForm">
+        <fieldset class="q">
+          <legend>1) Si duplicas <em>v₀</em> manteniendo θ y g, ¿qué pasa con el alcance R?</legend>
+          <label><input type="radio" name="q1" value="a"> Se mantiene igual</label><br>
+          <label><input type="radio" name="q1" value="b"> Se duplica</label><br>
+          <label><input type="radio" name="q1" value="c"> Se cuadruplica</label>
+        </fieldset>
+
+        <fieldset class="q">
+          <legend>2) ¿A qué ángulo se maximiza el alcance en terreno plano sin aire?</legend>
+          <label><input type="radio" name="q2" value="a"> 30°</label><br>
+          <label><input type="radio" name="q2" value="b"> 45°</label><br>
+          <label><input type="radio" name="q2" value="c"> 60°</label>
+        </fieldset>
+
+          <fieldset class="q">
+    <legend>3) ¿Por qué los cohetes comienzan con un lanzamiento vertical antes de inclinarse?</legend>
+    <label><input type="radio" name="q3" value="a"> Para aumentar la velocidad horizontal desde el inicio</label><br>
+    <label><input type="radio" name="q3" value="b"> Para atravesar la parte más densa de la atmósfera más eficientemente</label><br>
+    <label><input type="radio" name="q3" value="c"> Para seguir una parábola perfecta desde el suelo</label>
+  </fieldset>
+
+          <fieldset class="q">
+    <legend>4) ¿Qué fuerza actúa verticalmente durante el movimiento parabólico del cohete?</legend>
+    <label><input type="radio" name="q4" value="a"> La resistencia del aire</label><br>
+    <label><input type="radio" name="q4" value="b"> La gravedad</label><br>
+    <label><input type="radio" name="q4" value="c"> La velocidad horizontal</label>
+  </fieldset>
+
+          <fieldset class="q">
+  <legend>5) ¿Por qué la trayectoria de un cohete al llegar a la órbita no es una parábola perfecta?</legend>
+  <label><input type="radio" name="q5" value="a"> Porque en el espacio no existe la gravedad</label><br>
+  <label><input type="radio" name="q5" value="b"> Porque al llegar a la órbita se aplican más fuerzas y se busca una trayectoria curva controlada</label><br>
+  <label><input type="radio" name="q5" value="c"> Porque el cohete no tiene velocidad horizontal</label>
+  </fieldset>
+
+        <button type="button" class="btn" id="btnQuiz">Calificar</button>
+        <span id="quizOut" style="margin-left:12px"></span>
+      </form>
+    </section>
+
+    <div class="footer">Todos los derechos reservados © · Autores: Diego Ramos Y Ashley Reyes · 2025</div>
+  </main>
+
+  <script>
+    // ---------- Vista previa animada del hero ----------
+    (function preview(){
+      const c=document.getElementById('preview'); if(!c) return; const ctx=c.getContext('2d');
+      let t=0; function draw(){
+        ctx.clearRect(0,0,c.width,c.height);
+        // fondo
+        const g=ctx.createLinearGradient(0,0,c.width,c.height); g.addColorStop(0,'#0e1533'); g.addColorStop(1,'#0b1020'); ctx.fillStyle=g; ctx.fillRect(0,0,c.width,c.height);
+        // eje suelo
+        ctx.strokeStyle='rgba(255,255,255,.12)'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(30,c.height-30); ctx.lineTo(c.width-20,c.height-30); ctx.stroke();
+        // trayectoria stylized
+        ctx.strokeStyle='#7c9cff'; ctx.lineWidth=3; ctx.beginPath();
+        const v0=26, ang=45*Math.PI/180, g0=9.8;
+        const vx=v0*Math.cos(ang), vy=v0*Math.sin(ang);
+        for(let i=0;i<=120;i++){
+          const tt=i/120* (2*vy/g0);
+          const x=30 + vx*tt*7;
+          const y=(c.height-30) - (vy*tt - 0.5*g0*tt*tt)*7;
+          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+        // partícula
+        const T=2*vy/9.8; const tt=(t%T);
+        const x=30 + vx*tt*7; const y=(c.height-30) - (vy*tt - 0.5*9.8*tt*tt)*7;
+        ctx.fillStyle='#5fe1a5'; ctx.beginPath(); ctx.arc(x,y,6,0,Math.PI*2); ctx.fill();
+        t+=0.02; requestAnimationFrame(draw);
+      } draw();
+    })();
+
+    // ---------- Simulador principal ----------
+    const v0=document.getElementById('v0');
+    const ang=document.getElementById('ang');
+    const grav=document.getElementById('grav');
+    const v0Out=document.getElementById('v0Out');
+    const angOut=document.getElementById('angOut');
+    const gOut=document.getElementById('gOut');
+    const tVuelo=document.getElementById('tVuelo');
+    const hMax=document.getElementById('hMax');
+    const alcance=document.getElementById('alcance');
+    const scene=document.getElementById('scene');
+    const ctx=scene.getContext('2d');
+
+    let running=false, time=0;
+
+    function fmt(n){return (Math.round(n*100)/100).toFixed(2)}
+
+    function metrics(){
+      const v=+v0.value, a=+ang.value*Math.PI/180, g=+grav.value;
+      const v0x=v*Math.cos(a), v0y=v*Math.sin(a);
+      const T=2*v0y/g; const H=v0y*v0y/(2*g); const R=v*v*Math.sin(2*a)/g;
+      tVuelo.textContent=fmt(T); hMax.textContent=fmt(H); alcance.textContent=fmt(R);
+      return {v,a,g,v0x,v0y,T,H,R};
+    }
+
+    function drawScene(){
+      const {v,a,g,v0x,v0y,T,H,R}=metrics();
+      const pad=40; const W=scene.width, Hc=scene.height; // escala automática
+      const scaleX=(W-2*pad)/(R*1.05 || 1);
+      const scaleY=(Hc-2*pad)/(Math.max(H,1)*1.4);
+
+      // fondo
+      const grd=ctx.createLinearGradient(0,0,0,Hc); grd.addColorStop(0,'#0f1736'); grd.addColorStop(1,'#0b1020');
+      ctx.fillStyle=grd; ctx.fillRect(0,0,W,Hc);
+
+      // ejes
+      ctx.strokeStyle='rgba(255,255,255,.15)'; ctx.lineWidth=1.5; ctx.beginPath();
+      ctx.moveTo(pad,Hc-pad); ctx.lineTo(W-pad,Hc-pad); // x
+      ctx.moveTo(pad,Hc-pad); ctx.lineTo(pad,pad); // y
+      ctx.stroke();
+
+      // marcas
+      ctx.fillStyle='rgba(255,255,255,.35)'; ctx.font='12px Inter';
+      for(let i=0;i<=5;i++){
+        const x=pad + (i/5)*(W-2*pad);
+        ctx.fillText(fmt((i/5)*R), x-8, Hc-pad+16);
+      }
+      for(let i=0;i<=4;i++){
+        const y=Hc - (pad + (i/4)*(Hc-2*pad));
+        ctx.fillText(fmt((i/4)*Math.max(H,1)), pad-30, y+4);
+      }
+
+      // trayectoria
+      ctx.strokeStyle='#7c9cff'; ctx.lineWidth=2.5; ctx.beginPath();
+      const steps=180; for(let i=0;i<=steps;i++){
+        const t=i/steps*T; const x=pad + v0x*t*scaleX; const y=Hc-pad - (v0y*t - 0.5*g*t*t)*scaleY;
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      } ctx.stroke();
+
+      // proyectil (si está corriendo)
+      if(running){
+        const t=Math.min(time,T); const x=pad + v0x*t*scaleX; const y=Hc-pad - (v0y*t - 0.5*g*t*t)*scaleY;
+        ctx.fillStyle='#5fe1a5'; ctx.beginPath(); ctx.arc(x,y,6,0,Math.PI*2); ctx.fill();
+        time += 1/60;
+        if(time> T){ running=false; }
+      }
+    }
+
+    function syncLabels(){ v0Out.textContent=v0.value; angOut.textContent=ang.value; gOut.textContent=(+grav.value).toFixed(2); }
+
+    function loop(){
+      drawScene(); requestAnimationFrame(loop);
+    }
+
+    // Eventos
+    [v0,ang,grav].forEach(el=> el.addEventListener('input', ()=>{ syncLabels(); if(!running) time=0; drawScene(); }));
+    document.getElementById('btnPlay').addEventListener('click', ()=>{ running=true; time=0; });
+    document.getElementById('btnPause').addEventListener('click', ()=>{ running=false; });
+    document.getElementById('btnReset').addEventListener('click', ()=>{ running=false; time=0; drawScene(); });
+
+    syncLabels(); metrics(); drawScene(); loop();
+
+    // ---------- Quiz ----------
+    document.getElementById('btnQuiz').addEventListener('click', ()=>{
+      const q1=document.querySelector('input[name=q1]:checked');
+      const q2=document.querySelector('input[name=q2]:checked');
+      const q3=document.querySelector('input[name=q3]:checked');
+      const q4=document.querySelector('input[name=q4]:checked');
+      const q5=document.querySelector('input[name=q5]:checked');
+      let score=0, total=5;
+      if(q1 && q1.value==='c') score++;// R ~ v0^2
+      if(q2 && q2.value==='b') score++;// 45°
+      if(q3 && q3.value==='b') score++;// Para atravesar la parte más densa de la atmósfera más eficientemente
+      if(q4 && q4.value==='b') score++;// La gravedad
+      if(q5 && q5.value==='b') score++;// 45°
+      const out=document.getElementById('quizOut');
+      out.textContent = `Puntaje: ${score}/${total}`
+      out.style.color = score===total ? '#5fe1a5' : (score>=total/2 ? '#ffb400' : '#ff6b6b');
+    });
+  </script>
+</body>
+</html>
+
