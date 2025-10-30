@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contacto</title>
+  <link rel="stylesheet" href="proyecto de grado.html">
+  <style>
+    img {
+      border-radius: 49%;
+      margin-left: 650px;
+    }
+    input, textarea{
+       resize: none;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      border: 1px solid #000000;
+      font-size: 16px;
+      background-color: #ffffff;
+    }
+    label, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      background-color: #00d2ff;
+    }
+    h1 { 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 32px; 
+      margin-bottom: 45px; 
+      background-image: linear-gradient(120deg, #00d2ff, #3a47d5);
+    } 
+      
+    a {
+      margin-right: 20px;
+      margin-bottom: 500px;
+      font-size: large;
+      margin-left: 20px;
+      position: relative;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 500;
+      border-radius: 8px;
+            background-image: linear-gradient(45deg, #00d2ff, #3a47d5);
+      padding: 10px 50px; 
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 10px
+      }
+    p {
+      font-size: 22px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #ffffff;}
+
+      *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto; color:var(--ink); background:radial-gradient(60% 100% at 70% 10%, #1a2148 0%, #0b1020 60%);
+      background-attachment: fixed;}
+    a{color:var(--brand);text-decoration:none}
+    header{position:sticky;top:0;backdrop-filter: blur(8px); background-color:rgba(11,16,32,.6); border-bottom:1px solid rgba(255,255,255,.06); z-index:10}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px 20px}
+    nav{display:flex;gap:14px;align-items:center;justify-content:space-between}
+    nav .links a{padding:8px 12px;border-radius:12px}
+    nav .links a:hover{background:rgba(18, 38, 95, 0.863)}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:40px 20px}
+    .title{font-size: clamp(28px, 4vw, 48px); font-weight:800; letter-spacing:-.02em}
+    .subtitle{color:var(--muted);font-size:clamp(14px,1.6vw,18px);line-height:1.5}
+    .cta{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn{background:linear-gradient(135deg, var(--brand), #6fd1ff); border:none;color:#0b1020;padding:12px 16px;border-radius:16px;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
+    .btn.secondary{background:transparent;color:var(--ink);border:1px solid rgba(255,255,255,.18)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.10); border-radius:22px; box-shadow:var(--shadow)}
+    .grid{display:grid;gap:20px}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.hide-sm{display:none}}
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 20px;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(21, 192, 204, 0.04), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(16, 192, 223, 0.1);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+      <div class="sidebar">
+    <h1>Menú</h1>
+    <a href="proyecto de grado.html">Inicio</a>
+    <a href="datos_interesantes.html">Datos Interesantes</a>
+    <a href="#">Simulador</a>
+    <a href="#">Teoría</a>
+    <a href="#">Evaluación</a>
+  </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Contacto</h1>
+    <div class="card">
+      <p>Si tienes preguntas o sugerencias, no dudes en contactarnos:</p>
+      <form>
+        <label for="name">Nombre:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="email">Correo Electrónico:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label for="message">Mensaje:</label><br>
+        <textarea id="message" name="message"></textarea><br>
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
