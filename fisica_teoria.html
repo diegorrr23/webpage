@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teoría – Física Interactiva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="parabola.png" class="icon">
+  <style>
+    :root{
+      --bg:#0b1020; --card:#121733; --ink:#e7eaf6; --muted:#a9b0d6; --brand:#7c9cff; --accent:#5fe1a5;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+
+    * {box-sizing:border-box}
+    html, body {height:100%; margin:0}
+    body {
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto; 
+      color:var(--ink); 
+      background:radial-gradient(60% 100% at 70% 10%, #1a2148 0%, #0b1020 60%);
+      background-attachment: fixed;
+    }
+
+    header {
+      backdrop-filter: blur(8px); 
+      background-color:rgba(11,16,32,.6); 
+      border-bottom:1px solid rgba(255,255,255,.06);
+      padding: 18px 20px;
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .logo img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .logo span {
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-links a {
+      padding: 8px 16px;
+      border-radius: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: rgba(124, 156, 255, 0.2);
+      color: var(--brand);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .theory-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin-bottom: 25px;
+    }
+
+    .theory-card h2 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: var(--brand);
+    }
+
+    .theory-card ul {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-left: 20px;
+      color: var(--muted);
+    }
+
+    .theory-card ul li {
+      margin-bottom: 12px;
+    }
+
+    .theory-card code {
+      background: rgba(124, 156, 255, 0.15);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+      font-family: 'Courier New', monospace;
+    }
+
+    .highlight-box {
+      background: rgba(95, 225, 165, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .highlight-box p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .image-section {
+      margin: 30px 0;
+    }
+
+    .image-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 22px;
+      padding: 30px;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .image-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(124, 156, 255, 0.2);
+    }
+
+    .image-card img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 16px;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    .image-card p {
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .footer {
+      color: var(--muted);
+      text-align: center;
+      padding: 30px 0;
+      font-size: 13px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">
+        <img src="parabola.png" alt="Logo">
+        <span>Física Interactiva</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Inicio</a>
+        <a href="simulador.html">🚀 Simulador</a>
+        <a href="teoria.html" class="active">📚 Teoría</a>
+        <a href="evaluacion.html">✏️ Evaluación</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1 class="page-title">📚 Teoría del Movimiento Parabólico</h1>
+
+    <div class="theory-card">
+      <h2>Fórmulas Fundamentales</h2>
+      <ul>
+        <li><strong>Componentes iniciales de velocidad:</strong>
+          <br><code>v<sub>0x</sub> = v<sub>0</sub> · cos(θ)</code> (componente horizontal)
+          <br><code>v<sub>0y</sub> = v<sub>0</sub> · sin(θ)</code> (componente vertical)
+        </li>
+        <li><strong>Ecuaciones de posición:</strong>
+          <br><code>x(t) = v<sub>0x</sub> · t</code> (desplazamiento horizontal)
+          <br><code>y(t) = v<sub>0y</sub> · t - (1/2) g t²</code> (desplazamiento vertical)
+        </li>
+        <li><strong>Tiempo de vuelo</strong> (cuando y=0):
+          <br><code>T = 2 v<sub>0y</sub> / g</code>
+        </li>
+        <li><strong>Altura máxima:</strong>
+          <br><code>H = (v<sub>0y</sub>)² / (2g)</code>
+        </li>
+        <li><strong>Alcance horizontal:</strong>
+          <br><code>R = (v<sub>0</sub>)² · sin(2θ) / g</code>
+        </li>
+      </ul>
+
+      <div class="highlight-box">
+        <p><strong>💡 Dato clave:</strong> El alcance máximo se logra con un ángulo de <strong>θ ≈ 45°</strong> cuando el punto de caída está a la misma altura del lanzamiento y no hay resistencia del aire.</p>
+      </div>
+    </div>
+
+    <div class="image-section">
+      <div class="image-card">
+        <img src="movimiento.parabolico.webp" alt="Movimiento Parabólico">
+        <p>
+          El movimiento parabólico es un tipo de movimiento bidimensional donde actúan dos 
+          componentes: una horizontal, con velocidad constante, y otra vertical, afectada por la gravedad. 
+          Si se duplica la velocidad inicial (v₀) manteniendo el mismo ángulo de lanzamiento (θ) y 
+          la gravedad (g), el alcance (R) se cuadruplica, ya que este depende del cuadrado de la velocidad inicial. 
+          En condiciones ideales, sin la influencia del aire, el alcance máximo se logra con un ángulo de 45°, 
+          pues allí se equilibran las componentes vertical y horizontal del movimiento, logrando la mayor distancia 
+          posible.
+        </p>
+      </div>
+
+      <div class="image-card">
+        <img src="cohete.jpg" alt="Lanzamiento de Cohete">
+        <p>
+          En el caso de los cohetes, el lanzamiento comienza de forma vertical no para seguir 
+          una parábola perfecta, sino para atravesar la parte más densa de la atmósfera de manera eficiente.
+          Esto reduce la resistencia del aire y el consumo de combustible durante los primeros instantes del vuelo.
+          Una vez alcanzada cierta altura, el cohete se inclina gradualmente para ganar velocidad horizontal, 
+          necesaria para entrar en órbita.
+        </p>
+      </div>
+
+      <div class="image-card">
+        <img src="cohete2.webp" alt="Cohete en Órbita">
+        <p>
+          Durante el movimiento parabólico, la única fuerza que actúa verticalmente es la gravedad, 
+          la cual dirige el objeto hacia la Tierra y modifica su trayectoria. Sin embargo, cuando un cohete 
+          alcanza el espacio, su movimiento deja de ser una parábola perfecta porque entran en juego fuerzas 
+          adicionales y se aplican maniobras de control que permiten ajustar 
+          su dirección y mantener una trayectoria estable alrededor del planeta.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">Todos los derechos reservados © · Autores: Diego Ramos Y Ashley Reyes · 2025</div>
+  </div>
+</body>
+</html>
